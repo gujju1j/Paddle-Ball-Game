@@ -20,6 +20,7 @@ var paddle2Y = 250;
 const PADDLE_WIDTH = 10;
 const PADDLE_HEIGHT = 100;
 
+// mouse position synchronized to paddle position for player 1
 function calcMousePos(evnt) {
     var rect = canvas.getBoundingClientRect();
     var root = document.documentElement;
@@ -31,6 +32,7 @@ function calcMousePos(evnt) {
     };
 }
 
+// handling mouse click to enable new game to continue
 function handleMouseClick(evnt) {
     if(winScreen) {
         player1Score = 0;
@@ -39,6 +41,7 @@ function handleMouseClick(evnt) {
     }
 }
 
+// defining the ball speed on loading the webpage
 window.onload = function() {
     canvas = document.getElementById('gameCanvas');
     canvasContext = canvas.getContext('2d');
@@ -58,6 +61,8 @@ window.onload = function() {
         });
 }
 
+
+// reset the ball from middle of the screen when it misses to hit the paddle
 function ballReset() {
     if(player1Score >= WINNING_SCORE ||
         player2Score >= WINNING_SCORE) {
@@ -71,6 +76,7 @@ function ballReset() {
     ballY = canvas.height/2;
 }
 
+// computer paddle movement automated according to padlle position
 function computerMovement() {
     var paddle2YCenter = paddle2Y + (PADDLE_HEIGHT/2);
     if(paddle2YCenter < ballY - 35) {
@@ -80,6 +86,8 @@ function computerMovement() {
     }
 }
 
+
+// ball and paddle movement controlled by mouse
 function moveAll() {
     if(winScreen) {
         return;
@@ -124,12 +132,15 @@ function moveAll() {
     }
 }
 
+// drawing the middle line
+
 function drawLine() {
     for(var i=0;i<canvas.height;i+=40) {
         colorRect(canvas.width/2-1,i,2,20,'white');
     }
 }
 
+// displaying output after player/ computer won
 function drawAll() {
     // next line blanks out the screen with black
     colorRect(0,0,canvas.width,canvas.height,'black');
@@ -162,6 +173,7 @@ function drawAll() {
     canvasContext.fillText(player2Score, canvas.width-100, 100);
 }
 
+// ball shape and color
 function colorCircle(centerX, centerY, radius, drawColor) {
     canvasContext.fillStyle = drawColor;
     canvasContext.beginPath();
@@ -169,6 +181,7 @@ function colorCircle(centerX, centerY, radius, drawColor) {
     canvasContext.fill();
 }
 
+// paddle shape and color
 function colorRect(leftX,topY, width,height, drawColor) {
     canvasContext.fillStyle = drawColor;
     canvasContext.fillRect(leftX,topY, width,height);
